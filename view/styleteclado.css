@@ -1,0 +1,53 @@
+.linha-teclado {
+    display: flex;
+    justify-content: center;
+}
+
+.tecla {
+    padding: 10px;
+    margin: 2px;
+    border: 1px solid #090909;
+    cursor: pointer;
+    text-align: center;
+    height: 100px;
+    width: 100px;
+    color: rgb(245, 245, 245);
+    background-color: #0e0e0e;
+    font-size: 5rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.tecla.selecionada {
+    background-color: #202020;
+    color: rgb(251, 255, 0);
+    border: 1px solid whitesmoke;
+    transition: 0.3s;
+}
+.container{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    height: 800px;
+}
+body{
+    background-color: #0a0a0a;
+    font-family: "Open Sans", sans-serif;
+}
+input{
+    bottom: 20px;
+    position: relative;
+    width: 90%;
+    height: 100px;
+    font-size: 7rem;
+    background-color: transparent;
+    color: yellow;
+    border: none;
+
+}
+.tecla-enviar {
+    flex: 1; /* Faz a tecla "Enviar" ocupar toda a largura disponível */
+    margin: 2px 0; /* Ajusta a margem para a tecla "Enviar" */
+}
