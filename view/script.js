@@ -136,6 +136,7 @@ const checkCollision = () => {
 
 const gameOver = () => {
     direction = undefined;
+    document.querySelector("score").value = 
     menu.style.display = "flex";
     finalScore.innerText = score.innerText;
     canvas.style.filter = "blur(2px)";
@@ -175,10 +176,13 @@ document.addEventListener("keydown", ({ key }) => {
 });
 
 buttonPlay.addEventListener("click", () => {
+    document.querySelector("#score").value = score.innerText;
     snake = [initialPosition];
     direction = null; 
     clearTimeout(loopId); // Stop the game loop
+    
     restart(); // Reinicializa o jogo e exibe a tela de inserção de nome
+
 });
 
 const restart = () => {
@@ -191,5 +195,5 @@ const restart = () => {
     
     // Reinicializa o input de texto e exibe informações
     info.style.display = "flex";
-    texto.value = ""; 
+    //texto.value = ""; 
 };

@@ -14,7 +14,7 @@ if (isset($_REQUEST["acao"])){
 		//chamando o método cadastrar
 		$jogador->cadastrar();
 			//mensagem de confirmação 
-		echo "ok";
+		//echo "ok";
 		break;
 
 		case 'consultar_json':
@@ -29,14 +29,14 @@ if (isset($_REQUEST["acao"])){
 
 		$agenda->atualizar();
 
-		echo "ok";
+		//echo "ok";
 		break;
 		
 		case 'excluir':
 		$jogador->codigo = $_POST['codigo'];
 		$jogador->excluir();
 
-		echo "ok";
+		//echo "ok";
 		break;
 
 		

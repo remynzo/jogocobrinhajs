@@ -12,13 +12,14 @@ include_once("../controller/playercontroller.php");
     <title>Document</title>
 </head>
 <body>
+    <form method="POST" action="?acao=cadastrar">    
     <h1></h1>
     <div class="score">score: <span class="score--value">00</span></div>
-    
+ 
     <div class="info">
         <h1>DIGITE SEU NOME:</h1>
         <input type="text" id="texto" name="texto">
-        <input type="hidden" name="score" id="score" value="0">
+        <input type="hidden" name="score" id="score">
 
         <div id="teclado">
         </div>
@@ -27,16 +28,17 @@ include_once("../controller/playercontroller.php");
     <div class="menu-screen">
         <span class="game-over">game over</span>
         <span class="final-score">score <span>00</span></span>
-        <form method="POST" action="?acao=cadastrar">
+
         <button type="submit" class="btn-play" onclick="cad()" >
             <span class="material-symbols-outlined">
                 play_circle
             </span>
-            </form>
+
             
             Jogar novamente
         </button>
     </div>
+    </form>
     <canvas width="600" height="600"></canvas>
     <script src="script.js"></script>
     <script src="scriptteclado.js"></script>
