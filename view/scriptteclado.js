@@ -10,9 +10,17 @@ const letras = [
     ['Enviar'] // Nova fileira com uma tecla que ocupa toda a largura
 ];
 let nome
+let numero
 // Variáveis para controlar a posição da tecla selecionada
 let linhaSelecionada = 0;
 let colunaSelecionada = 0;
+
+const questionar = () =>{
+    let pergunta = 0;
+    if (pergunta = 0){
+        document.getElementById
+    }
+}
 
 // Função para criar as divs das teclas
 function criarTeclado() {  

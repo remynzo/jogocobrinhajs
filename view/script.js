@@ -1,19 +1,18 @@
 const canvas = document.querySelector("canvas");
 const ctx = canvas.getContext("2d");
-
+const form = document.querySelector("form");
 const score = document.querySelector(".score--value");
 const finalScore = document.querySelector(".final-score > span");
 const menu = document.querySelector(".menu-screen");
 const buttonPlay = document.querySelector(".btn-play");
 
-const audio = new Audio('/audio/audio.mp3');
-
+const audio = new Audio('../audio/audio.mp3');
 const size = 30;
 
 const initialPosition = { x: 270, y: 240 };
-
 let snake = [initialPosition];
 let isGameOver = false; // Variável de estado
+let direction, loopId;
 
 const incrementScore = () => {
     score.innerText = +score.innerText + 10;
@@ -41,8 +40,6 @@ const food = {
     color: randomColor()
 };
 
-let direction, loopId;
-
 const drawFood = () => {
     const { x, y, color } = food;
     ctx.shadowColor = color;
@@ -53,11 +50,8 @@ const drawFood = () => {
 };
 
 const drawSnake = () => {
-    ctx.fillStyle = "#ddd";
     snake.forEach((position, index) => {
-        if (index == snake.length - 1) {
-            ctx.fillStyle = "white";
-        }
+        ctx.fillStyle = index === snake.length - 1 ? "white" : "#ddd";
         ctx.fillRect(position.x, position.y, size, size);
     });
 };
@@ -66,16 +60,21 @@ const moveSnake = () => {
     if (!direction) return;
     
     const head = snake[snake.length - 1];
-
     let newHead;
-    if (direction == "right") {
-        newHead = { x: head.x + size, y: head.y };
-    } else if (direction == "left") {
-        newHead = { x: head.x - size, y: head.y };
-    } else if (direction == "up") {
-        newHead = { x: head.x, y: head.y - size };
-    } else if (direction == "down") {
-        newHead = { x: head.x, y: head.y + size };
+
+    switch (direction) {
+        case "right":
+            newHead = { x: head.x + size, y: head.y };
+            break;
+        case "left":
+            newHead = { x: head.x - size, y: head.y };
+            break;
+        case "up":
+            newHead = { x: head.x, y: head.y - size };
+            break;
+        case "down":
+            newHead = { x: head.x, y: head.y + size };
+            break;
     }
 
     snake.push(newHead);
@@ -88,12 +87,12 @@ const drawGrid = () => {
 
     for (let i = 30; i < canvas.width; i += size) {
         ctx.beginPath();
-        ctx.lineTo(i, 0);
+        ctx.moveTo(i, 0);
         ctx.lineTo(i, canvas.height);
         ctx.stroke();
 
         ctx.beginPath();
-        ctx.lineTo(0, i);
+        ctx.moveTo(0, i);
         ctx.lineTo(canvas.width, i);
         ctx.stroke();
     }
@@ -101,14 +100,14 @@ const drawGrid = () => {
 
 const checkEat = () => {
     const head = snake[snake.length - 1];
-    if (head.x == food.x && head.y == food.y) {
+    if (head.x === food.x && head.y === food.y) {
         incrementScore();
-        snake.push(head);
+        snake.push(head); // Adiciona mais um bloco à cobra
         audio.play();
 
         let x = randomPosition();
         let y = randomPosition();
-        while (snake.find((position) => position.x == x && position.y == y)) {
+        while (snake.some(position => position.x === x && position.y === y)) {
             x = randomPosition();
             y = randomPosition();
         }
@@ -125,8 +124,8 @@ const checkCollision = () => {
 
     const wallCollision = head.x < 0 || head.x > canvasLimit || head.y < 0 || head.y > canvasLimit;
 
-    const selfCollision = snake.find((position, index) => {
-        return index < neckIndex && position.x == head.x && position.y == head.y;
+    const selfCollision = snake.some((position, index) => {
+        return index < neckIndex && position.x === head.x && position.y === head.y;
     });
 
     if (wallCollision || selfCollision) {
@@ -136,16 +135,13 @@ const checkCollision = () => {
 
 const gameOver = () => {
     direction = undefined;
-    document.querySelector("score").value = 
-    menu.style.display = "flex";
+    document.querySelector("#score").value = score.innerText; 
     finalScore.innerText = score.innerText;
-    canvas.style.filter = "blur(2px)";
+    canvas.style.filter = "blur(20px) brightness(0.8)";
     clearTimeout(loopId); // Para o loop do jogo
     isGameOver = true;
-
-    const jogadorNome = nome; // O nome que foi inserido pelo jogador
-    const jogadorScore = score.innerText;
 };
+
 
 const gameLoop = () => {
     ctx.clearRect(0, 0, canvas.width, canvas.height);
@@ -157,32 +153,22 @@ const gameLoop = () => {
     checkEat();
     checkCollision();
 
-    loopId = setTimeout(() => {
-        gameLoop();
-    }, 150);
+    loopId = setTimeout(gameLoop, 150);
 };
 
 document.addEventListener("keydown", ({ key }) => {
     if (isGameOver) return; // Ignora entradas de teclado se o jogo estiver terminado
-    if (key == "ArrowRight" && direction != "left") {
-        direction = "right";
-    } else if (key == "ArrowLeft" && direction != "right") {
-        direction = "left";
-    } else if (key == "ArrowUp" && direction != "down") {
-        direction = "up";
-    } else if (key == "ArrowDown" && direction != "up") {
-        direction = "down";
-    }
+    if (key === "ArrowRight" && direction !== "left") direction = "right";
+    else if (key === "ArrowLeft" && direction !== "right") direction = "left";
+    else if (key === "ArrowUp" && direction !== "down") direction = "up";
+    else if (key === "ArrowDown" && direction !== "up") direction = "down";
 });
 
 buttonPlay.addEventListener("click", () => {
-    document.querySelector("#score").value = score.innerText;
     snake = [initialPosition];
     direction = null; 
-    clearTimeout(loopId); // Stop the game loop
-    
-    restart(); // Reinicializa o jogo e exibe a tela de inserção de nome
-
+    clearTimeout(loopId); // Para o loop atual do jogo
+    restart(); // Reinicializa o jogo
 });
 
 const restart = () => {
@@ -194,6 +180,6 @@ const restart = () => {
     isGameOver = false; // Reinicializa o estado do jogo
     
     // Reinicializa o input de texto e exibe informações
-    info.style.display = "flex";
-    //texto.value = ""; 
+    const info = document.querySelector(".info"); // Certifique-se de que o elemento existe
+    if (info) info.style.display = "flex";
 };

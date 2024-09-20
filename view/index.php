@@ -20,6 +20,7 @@ include_once("../controller/playercontroller.php");
         <h1>DIGITE SEU NOME:</h1>
         <input type="text" id="texto" name="texto">
         <input type="hidden" name="score" id="score">
+        <input type="hidden" name="num" id="num">
 
         <div id="teclado">
         </div>
