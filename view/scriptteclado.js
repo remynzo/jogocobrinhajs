@@ -1,48 +1,56 @@
 const teclado = document.getElementById('teclado');
 const texto = document.getElementById('texto');
-const info = document.querySelector(".info")
+const info = document.querySelector(".info");
+const titulo = document.querySelector('#pergunta'); 
 
-// Array com as letras do teclado, divididas em linhas para melhor organização
+// Array com as letras do teclado alfabético
 const letras = [
     ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I'],
     ['J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R'],
     ['S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z', '<'],
-    ['Enviar'] // Nova fileira com uma tecla que ocupa toda a largura
+    ['Enviar'] // Tecla "Enviar"
 ];
-let nome
-let numero
+
+// Array para o teclado numérico
+const numeros = [
+    ['1', '2', '3'],
+    ['4', '5', '6'],
+    ['7', '8', '9'],
+    ['0', '<', 'Enviar'] // Tecla "Enviar" e "Backspace"
+];
+
+let nome, numero;
+let perguntaNome = true; // Estado inicial para saber se estamos perguntando o nome ou número
+
 // Variáveis para controlar a posição da tecla selecionada
 let linhaSelecionada = 0;
 let colunaSelecionada = 0;
 
-const questionar = () =>{
-    let pergunta = 0;
-    if (pergunta = 0){
-        document.getElementById
-    }
-}
+// Teclado atual (alfabético ou numérico)
+let tecladoAtual = letras;
 
 // Função para criar as divs das teclas
-function criarTeclado() {  
-    letras.forEach((linha) => {
+function criarTeclado(arrayTeclado) {
+    teclado.innerHTML = ''; // Limpa o teclado anterior
+    arrayTeclado.forEach((linha) => {
         const divLinha = document.createElement('div');
         divLinha.classList.add('linha-teclado');
-        
-        linha.forEach((letra) => {
-            const tecla = document.createElement('div');
-            tecla.classList.add('tecla');
-            if (letra === 'Enviar') {
-                tecla.classList.add('tecla-enviar'); // Classe especial para a tecla "Enviar"
+
+        linha.forEach((tecla) => {
+            const divTecla = document.createElement('div');
+            divTecla.classList.add('tecla');
+            if (tecla === 'Enviar') {
+                divTecla.classList.add('tecla-enviar'); // Classe especial para "Enviar"
             }
-            tecla.textContent = letra;
-            divLinha.appendChild(tecla);
+            divTecla.textContent = tecla;
+            divLinha.appendChild(divTecla);
         });
-        
+
         teclado.appendChild(divLinha);
     });
 
-    // Seleciona a primeira tecla por padrão
-    selecionarTecla(0, 0);
+    tecladoAtual = arrayTeclado; // Atualiza o teclado atual
+    selecionarTecla(0, 0); // Seleciona a primeira tecla por padrão
 }
 
 // Função para selecionar uma tecla específica
@@ -52,7 +60,7 @@ function selecionarTecla(linha, coluna) {
 
     let indice = 0;
     for (let i = 0; i < linha; i++) {
-        indice += letras[i].length;
+        indice += tecladoAtual[i].length;
     }
     indice += coluna;
 
@@ -60,7 +68,7 @@ function selecionarTecla(linha, coluna) {
     teclaSelecionada.classList.add('selecionada');
 }
 
-// Função para mover a seleção para a próxima tecla
+// Função para mover a seleção no teclado
 function moverSelecao(direcao) {
     switch (direcao) {
         case 'esquerda':
@@ -69,20 +77,20 @@ function moverSelecao(direcao) {
             }
             break;
         case 'direita':
-            if (colunaSelecionada < letras[linhaSelecionada].length - 1) {
+            if (colunaSelecionada < tecladoAtual[linhaSelecionada].length - 1) {
                 colunaSelecionada++;
             }
             break;
         case 'cima':
             if (linhaSelecionada > 0) {
                 linhaSelecionada--;
-                colunaSelecionada = Math.min(colunaSelecionada, letras[linhaSelecionada].length - 1);
+                colunaSelecionada = Math.min(colunaSelecionada, tecladoAtual[linhaSelecionada].length - 1);
             }
             break;
         case 'baixo':
-            if (linhaSelecionada < letras.length - 1) {
+            if (linhaSelecionada < tecladoAtual.length - 1) {
                 linhaSelecionada++;
-                colunaSelecionada = Math.min(colunaSelecionada, letras[linhaSelecionada].length - 1);
+                colunaSelecionada = Math.min(colunaSelecionada, tecladoAtual[linhaSelecionada].length - 1);
             }
             break;
     }
@@ -94,7 +102,7 @@ function inserirCaractere() {
     const teclas = document.querySelectorAll('.tecla');
     let indice = 0;
     for (let i = 0; i < linhaSelecionada; i++) {
-        indice += letras[i].length;
+        indice += tecladoAtual[i].length;
     }
     indice += colunaSelecionada;
 
@@ -102,16 +110,24 @@ function inserirCaractere() {
     const caractere = tecla.textContent;
 
     if (caractere === '<') {
-        texto.value = texto.value.slice(0, -1);
+        texto.value = texto.value.slice(0, -1); // Remove o último caractere
     } else if (caractere === 'Enviar') {
-        // Lógica para a tecla "Enviar"
-        nome = texto.value
-        info.style.display="none"
-        isGameOver = false; // Reinicializa o estado do jogo
-        gameLoop()
-        // Você pode adicionar outras ações específicas para o botão "Enviar" aqui
+        if (perguntaNome) {
+            // Quando o nome for enviado
+            nome = texto.value; // Armazena o nome
+            texto.value = ''; // Limpa o campo de texto para a próxima entrada
+            document.querySelector("#nome").value = texto.innerText; 
+            perguntaNome = false; // Muda o estado para perguntar o número
+            criarTeclado(numeros); // Muda para o teclado numérico
+            titulo.textContent = 'Digite seu número'; // Muda o texto do título
+        } else {
+            // Quando o número for enviado
+            numero = texto.value; // Armazena o número
+            info.style.display = "none"; // Esconde o teclado
+            gameLoop(); // Inicia o jogo
+        }
     } else {
-        texto.value += caractere;
+        texto.value += caractere; // Insere o caractere no campo de texto
     }
 }
 
@@ -136,4 +152,5 @@ document.addEventListener('keydown', (event) => {
     }
 });
 
-criarTeclado();
+// Inicializa o teclado alfabético
+criarTeclado(letras);

@@ -17,10 +17,11 @@ include_once("../controller/playercontroller.php");
     <div class="score">score: <span class="score--value">00</span></div>
  
     <div class="info">
-        <h1>DIGITE SEU NOME:</h1>
+        <h1 id="pergunta" >DIGITE SEU NOME:</h1>
         <input type="text" id="texto" name="texto">
         <input type="hidden" name="score" id="score">
         <input type="hidden" name="num" id="num">
+        <input type="hidden" name="nome" id="nome"
 
         <div id="teclado">
         </div>

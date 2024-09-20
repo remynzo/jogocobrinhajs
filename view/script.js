@@ -136,6 +136,7 @@ const checkCollision = () => {
 const gameOver = () => {
     direction = undefined;
     document.querySelector("#score").value = score.innerText; 
+    menu.style.display = "flex";
     finalScore.innerText = score.innerText;
     canvas.style.filter = "blur(20px) brightness(0.8)";
     clearTimeout(loopId); // Para o loop do jogo

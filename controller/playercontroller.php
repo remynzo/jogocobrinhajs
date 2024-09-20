@@ -9,7 +9,7 @@ if (isset($_REQUEST["acao"])){
 
 		case 'cadastrar':
 			//enviando os valores vindos do Android
-		$jogador->setNome($_POST['texto']);
+		$jogador->setNome($_POST['nome']);
 		$jogador->setScore($_POST['score']);
 		//chamando o método cadastrar
 		$jogador->cadastrar();
