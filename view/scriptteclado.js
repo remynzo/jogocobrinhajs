@@ -50,7 +50,7 @@ function criarTeclado(arrayTeclado) {
     });
 
     tecladoAtual = arrayTeclado; // Atualiza o teclado atual
-    selecionarTecla(0, 0); // Seleciona a primeira tecla por padrão
+    selecionarTecla(1, 1); // Seleciona a primeira tecla por padrão
 }
 
 // Função para selecionar uma tecla específica
@@ -62,11 +62,15 @@ function selecionarTecla(linha, coluna) {
     for (let i = 0; i < linha; i++) {
         indice += tecladoAtual[i].length;
     }
+    // Ajuste para calcular o índice correto
     indice += coluna;
 
     const teclaSelecionada = teclas[indice];
-    teclaSelecionada.classList.add('selecionada');
+    if (teclaSelecionada) {
+        teclaSelecionada.classList.add('selecionada');
+    }
 }
+
 
 // Função para mover a seleção no teclado
 function moverSelecao(direcao) {
@@ -97,6 +101,7 @@ function moverSelecao(direcao) {
     selecionarTecla(linhaSelecionada, colunaSelecionada);
 }
 
+
 // Função para inserir o caractere da tecla pressionada
 function inserirCaractere() {
     const teclas = document.querySelectorAll('.tecla');
@@ -113,25 +118,27 @@ function inserirCaractere() {
         texto.value = texto.value.slice(0, -1); // Remove o último caractere
     } else if (caractere === 'Enviar') {
         if (perguntaNome) {
-            // Quando o nome for enviado
             nome = texto.value; // Armazena o nome
             texto.value = ''; // Limpa o campo de texto para a próxima entrada
             document.getElementById('nome').value = nome;
             perguntaNome = false; // Muda o estado para perguntar o número
             criarTeclado(numeros); // Muda para o teclado numérico
             titulo.textContent = 'Digite seu número'; // Muda o texto do título
+            linhaSelecionada = 0; // Reinicializa a seleção para a primeira linha
+            colunaSelecionada = 0; // Reinicializa a seleção para a primeira coluna
         } else {
-            // Quando o número for enviado
             numero = texto.value; // Armazena o número
-            document.getElementById('num').value = numero; 
-          
+            document.getElementById('num').value = numero;
             info.style.display = "none"; // Esconde o teclado
             gameLoop(); // Inicia o jogo
         }
     } else {
         texto.value += caractere; // Insere o caractere no campo de texto
     }
+    // Mantenha a seleção correta após inserir o caractere
+    selecionarTecla(linhaSelecionada, colunaSelecionada);
 }
+
 
 // Eventos para controlar a navegação e a seleção
 document.addEventListener('keydown', (event) => {

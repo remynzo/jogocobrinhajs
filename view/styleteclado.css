@@ -1,11 +1,12 @@
 .linha-teclado {
     display: flex;
     justify-content: center;
+    align-items: center;
 }
 
 .tecla {
     padding: 10px;
-    margin: 2px;
+    margin: 20px;
     border: 1px solid #090909;
     cursor: pointer;
     text-align: center;
@@ -24,6 +25,8 @@
     color: rgb(251, 255, 0);
     border: 1px solid whitesmoke;
     transition: 0.3s;
+    height: 120px;
+    width: 120px;
 }
 .container{
     display: flex;
