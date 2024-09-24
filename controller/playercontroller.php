@@ -11,6 +11,7 @@ if (isset($_REQUEST["acao"])){
 			//enviando os valores vindos do Android
 		$jogador->setNome($_POST['nome']);
 		$jogador->setScore($_POST['score']);
+		$jogador->setNumero($_POST['num']);
 		//chamando o método cadastrar
 		$jogador->cadastrar();
 			//mensagem de confirmação 
@@ -21,35 +22,8 @@ if (isset($_REQUEST["acao"])){
 			echo json_encode($jogador->consultar());
 			break;
 		
-		case 'atualizar':
-		//$jogador->nome 	= $_POST['nome'];
-		$jogador->telefone	= $_POST['telefone'];
-		$agenda->email 	= $_POST['email'];
-		$agenda->codigo	= $_POST['codigo'];
-
-		$agenda->atualizar();
-
-		//echo "ok";
-		break;
-		
-		case 'excluir':
-		$jogador->codigo = $_POST['codigo'];
-		$jogador->excluir();
-
-		//echo "ok";
-		break;
-
-		
-
-		case 'retorna_cod':
-		$jogador->codigo	= $_POST['codigo'];
-		echo json_encode($agenda->retornarDados());
-		break;
-
-		case 'retorna_nome':
-		$jogador->setNome($_POST['nome']);
-		echo json_encode($agenda->retornarDadosNome());
-		break;
+	
+			
 	}
 }
 ?>

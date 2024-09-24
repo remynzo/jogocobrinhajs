@@ -22,10 +22,12 @@ const randomNumber = (min, max) => {
     return Math.round(Math.random() * (max - min) + min);
 };
 
-const randomPosition = () => {
-    const number = randomNumber(0, canvas.width - size);
+const randomPosition = (axis) => {
+    const maxSize = axis === 'x' ? canvas.width : canvas.height;
+    const number = randomNumber(0, maxSize - size);
     return Math.round(number / size) * size;
 };
+
 
 const randomColor = () => {
     const red = randomNumber(0, 255);
@@ -35,10 +37,11 @@ const randomColor = () => {
 };
 
 const food = {
-    x: randomPosition(),
-    y: randomPosition(),
+    x: randomPosition('x'),
+    y: randomPosition('y'),
     color: randomColor()
 };
+
 
 const drawFood = () => {
     const { x, y, color } = food;

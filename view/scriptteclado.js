@@ -116,13 +116,15 @@ function inserirCaractere() {
             // Quando o nome for enviado
             nome = texto.value; // Armazena o nome
             texto.value = ''; // Limpa o campo de texto para a próxima entrada
-            document.querySelector("#nome").value = texto.innerText; 
+            document.getElementById('nome').value = nome;
             perguntaNome = false; // Muda o estado para perguntar o número
             criarTeclado(numeros); // Muda para o teclado numérico
             titulo.textContent = 'Digite seu número'; // Muda o texto do título
         } else {
             // Quando o número for enviado
             numero = texto.value; // Armazena o número
+            document.getElementById('num').value = numero; 
+          
             info.style.display = "none"; // Esconde o teclado
             gameLoop(); // Inicia o jogo
         }

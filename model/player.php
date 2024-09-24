@@ -7,6 +7,8 @@ class Player implements JsonSerializable{
 	private $nome;
 	private $score;
 
+	private $numero;
+
 
 	//metodo para gerar o json
 	function jsonSerialize():mixed{
@@ -15,6 +17,7 @@ class Player implements JsonSerializable{
 			
 			'nome'	 	=> $this->nome,
 			'idPlayer' 	=> $this->idPlayer,
+			'numero'	=> $this->numero,
 			'score'		=> $this->score
 		];
 	}
@@ -26,6 +29,12 @@ class Player implements JsonSerializable{
 	}
 	function getNome(){
 		return $this->nome;
+	}
+	function setNumero($numero){
+		$this->numero = $numero;
+	}
+	function getNumero(){
+		return $this->numero;
 	}
 
 	
@@ -53,8 +62,8 @@ class Player implements JsonSerializable{
 
 	
 	function cadastrar(){
-		$comandoSql = "insert into player (nome, score) values (?,?)";
-		$valores = array($this->nome, $this->score);
+		$comandoSql = "insert into player (nome, score, numero) values (?,?,?)";
+		$valores = array($this->nome, $this->score, $this->numero);
 		$exec = $this->con->prepare($comandoSql);
 		$exec->execute($valores);
 	}
