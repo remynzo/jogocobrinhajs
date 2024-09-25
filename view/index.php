@@ -41,7 +41,7 @@ include_once("../controller/playercontroller.php");
         </button>
     </div>
     </form>
-    <canvas width="1200" height="900" ></canvas>
+    <canvas width="660" height="660" ></canvas>
     <script src="script.js"></script>
     <script src="scriptteclado.js"></script>
 </body>
