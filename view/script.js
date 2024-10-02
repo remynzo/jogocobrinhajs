@@ -137,6 +137,7 @@ const checkCollision = () => {
 };
 
 const gameOver = () => {
+    window.location.href = "gameover.php";
     direction = undefined;
     document.querySelector("#score").value = score.innerText; 
     menu.style.display = "flex";
@@ -166,13 +167,6 @@ document.addEventListener("keydown", ({ key }) => {
     else if (key === "ArrowLeft" && direction !== "right") direction = "left";
     else if (key === "ArrowUp" && direction !== "down") direction = "up";
     else if (key === "ArrowDown" && direction !== "up") direction = "down";
-});
-
-buttonPlay.addEventListener("click", () => {
-    snake = [initialPosition];
-    direction = null; 
-    clearTimeout(loopId); // Para o loop atual do jogo
-    restart(); // Reinicializa o jogo
 });
 
 const restart = () => {
