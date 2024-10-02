@@ -187,3 +187,4 @@ const restart = () => {
     const info = document.querySelector(".info"); // Certifique-se de que o elemento existe
     if (info) info.style.display = "flex";
 };
+ gameLoop()

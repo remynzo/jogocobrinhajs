@@ -130,7 +130,7 @@ function inserirCaractere() {
             numero = texto.value; // Armazena o número
             document.getElementById('num').value = numero;
             info.style.display = "none"; // Esconde o teclado
-            gameLoop(); // Inicia o jogo
+            window.location.href = "jogo.html";
         }
     } else {
         texto.value += caractere; // Insere o caractere no campo de texto
