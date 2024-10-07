@@ -1,9 +1,8 @@
 <?php
-    $nome = $_POST["nome"];
-    $numero = $_POST["num"];
-    echo ($nome);   
-
-    ?>
+    // Captura os dados enviados via POST da página anterior
+    $nome = $_POST["nome"] ?? ''; // Usa ?? para evitar erro caso não tenha valor
+    $num = $_POST["num"] ?? ''; // Evita erro se 'num' não for enviado
+?>
 <!DOCTYPE html>
 <html lang="pt-br">
 <head>
@@ -17,13 +16,18 @@
 <body>   
     <form action="gameover.php" method="POST">
         <h1></h1>
-        <div class="score">score: <span class="score--value" name="score">00</span></div>
+        
+        <div class="score">score: <span class="score--value" id="scoreDisplay">00</span></div>
+        
         <button id="chamaPHP" type="submit" style="display:none;"></button>
-        <input type="hidden" name="score" id="score">
-        <input type="hidden" name="score" id="score">
-        <input type="hidden" name="score" id="score">
-        <canvas width="600" height="600" ></canvas>
-    </form>
-    <script src="script.js"></script>
+
+        <input type="hidden" name="score" id="score" value="0">
+        <input type="hidden" name="nome" id="nome" value="<?php echo htmlspecialchars($nome); ?>"> 
+        <input type="hidden" name="num" id="num" value="<?php echo htmlspecialchars($num); ?>"> 
+        
+<canvas width="600" height="600"></canvas>
+</form>
+
+<script src="script.js"></script>
 </body>
 </html>

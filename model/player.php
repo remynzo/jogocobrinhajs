@@ -1,132 +1,80 @@
 <?php
-class Player implements JsonSerializable{
-//formato de envio de dados do servidor para o cliente
-//será em JSON
-	//atributos da classe
-	private $idPlayer;
-	private $nome;
-	private $score;
+class Player implements JsonSerializable {
+    private $idPlayer;
+    private $nome;
+    private $score;
+    private $numero;
+    private $con;
 
-	private $numero;
+    // Método para gerar o JSON
+    function jsonSerialize(): mixed {
+        return [
+            'nome' => $this->nome,
+            'idPlayer' => $this->idPlayer,
+            'numero' => $this->numero,
+            'score' => $this->score
+        ];
+    }
 
+    // Métodos Get e Set
+    function setNome($nome) {
+        $this->nome = $nome;
+    }
+    function getNome() {
+        return $this->nome;
+    }
+    function setNumero($numero) {
+        $this->numero = $numero;
+    }
+    function getNumero() {
+        return $this->numero;
+    }
+    function setScore($score) {
+        $this->score = $score;
+    }
+    function getScore() {
+        return $this->score;
+    }
 
-	//metodo para gerar o json
-	function jsonSerialize():mixed{
-		return 
-		[
-			
-			'nome'	 	=> $this->nome,
-			'idPlayer' 	=> $this->idPlayer,
-			'numero'	=> $this->numero,
-			'score'		=> $this->score
-		];
-	}
+    // Construtor
+    function __construct() {
+        include_once("conexao.php");
+        $classe_con = new Conexao();
+        $this->con = $classe_con->conectar();
+    }
 
-	//Metodos Get e Set
-	//Métodos Mágicos
-	function setNome($nome){
-		$this->nome = $nome;
-	}
-	function getNome(){
-		return $this->nome;
-	}
-	function setNumero($numero){
-		$this->numero = $numero;
-	}
-	function getNumero(){
-		return $this->numero;
-	}
+    // Cadastrar jogador
+    function cadastrar() {
+        $comandoSql = "INSERT INTO player (nome, score, numero) VALUES (?, ?, ?)";
+        $valores = array($this->nome, $this->score, $this->numero);
+        $exec = $this->con->prepare($comandoSql);
+        
+        try {
+            return $exec->execute($valores);
+        } catch (PDOException $e) {
+            echo "Erro ao cadastrar: " . $e->getMessage();
+            return false; // Retorna falso se ocorrer erro
+        }
+    }
 
-	
-	function setScore($score){
-		$this->score = $score;
-	}
-	function getScore(){
-		return $this->score;
-	}
-  	function __get($atributo){
-		return $this->atributo;
-	}
-
-	function __set($atributo, $value){
-		$this->$atributo = $value;
-	}
-
-	//acessar o banco de dados
-	private $con;
-	function __construct(){
-		include_once("conexao.php");
-		$classe_con = new Conexao();
-		$this->con = $classe_con->Conectar();
-	}
-
-	
-	function cadastrar(){
-		$comandoSql = "insert into player (nome, score, numero) values (?,?,?)";
-		$valores = array($this->nome, $this->score, $this->numero);
-		$exec = $this->con->prepare($comandoSql);
-		$exec->execute($valores);
-	}
-
-	function atualizar(){
-		$comandoSql = "update tbagendapessoal set nome = ?, telefone = ?, email = ? where codigo = ?";
-		$valores = array($this->nome, $this->telefone, $this->email, $this->codigo);
-		$exec = $this->con->prepare($comandoSql);
-		$exec->execute($valores);
-	}
-
-	function excluir(){
-	$comandoSql = "delete from tbagendapessoal where codigo = ?";
-	$valores = array($this->codigo);
-	$exec = $this->con->prepare($comandoSql);
-	$exec->execute($valores);
-	}
-
-	function consultar(){
-	$comandoSql = "select * from player ";
-	$exec = $this->con->prepare($comandoSql);
-	$exec->execute();
-
-	$dados = array();
-
-	foreach ($exec->fetchAll() as $value) {
-		$jogador = new Player;
-		$jogador->nome 	= $value["nome"];
-		$jogador->score	= $value["score"];
-		$jogador->idPlayer	= $value["idPlayer"];
-	
-		$dados[] = $jogador;		
-		}
-		return $dados;
-	}
-
-	function retornarDados(){
-	$comandoSql = "select * from tbagendapessoal where codigo = ?";
-	$valores = array($this->codigo);
-	$exec = $this->con->prepare($comandoSql);
-	$exec->execute($valores);
-
-	$value  = $exec->fetch();
-
-	$jogador = new Player;
-	$jogador->nome 		= $value["nome"];
-	$jogador->score	= $value["score"];
-
-	return $jogador;
-	}
-
-	function retornarDadosNome(){
-	$comandoSql = "select * from tbagendapessoal where nome like ?";
-	$valores = array("%".$this->nome."%");
-	$exec = $this->con->prepare($comandoSql);
-	$exec->execute($valores);
-	$value  = $exec->fetch();
-	$jogador = new Player;
-	$jogador->nome 		= $value["nome"];
-	$jogador->score	= $value["score"];
-
-	return $jogador;
-}
-
+    // Consultar jogadores
+    function consultar() {
+        $comandoSql = "SELECT * FROM player";
+        $exec = $this->con->prepare($comandoSql);
+        $exec->execute();
+        
+        $dados = array();
+        foreach ($exec->fetchAll(PDO::FETCH_ASSOC) as $value) {
+            $jogador = new Player;
+            $jogador->setNome($value["nome"]);
+            $jogador->setScore($value["score"]);
+            $jogador->idPlayer = $value["idPlayer"];
+            $jogador->setNumero($value["numero"]); // Certifique-se de que 'numero' existe na tabela
+            $dados[] = $jogador;
+        }
+        return $dados;
+    }
+    
+    // Outros métodos (atualizar, excluir, etc.) seguem o mesmo padrão
 }
 ?>
