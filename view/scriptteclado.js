@@ -50,27 +50,31 @@ function criarTeclado(arrayTeclado) {
     });
 
     tecladoAtual = arrayTeclado; // Atualiza o teclado atual
-    selecionarTecla(1, 1); // Seleciona a primeira tecla por padrão
+    selecionarTecla(0, 0); // Seleciona a primeira tecla por padrão
 }
 
-// Função para selecionar uma tecla específica
+// Função para selecionar uma tecla específica com visual mais claro
 function selecionarTecla(linha, coluna) {
     const teclas = document.querySelectorAll('.tecla');
     teclas.forEach(tecla => tecla.classList.remove('selecionada'));
 
+    // Ajuste para evitar que navegue para fora dos limites do teclado
+    linhaSelecionada = Math.max(0, Math.min(linha, tecladoAtual.length - 1));
+    colunaSelecionada = Math.max(0, Math.min(coluna, tecladoAtual[linhaSelecionada].length - 1));
+
     let indice = 0;
-    for (let i = 0; i < linha; i++) {
+    for (let i = 0; i < linhaSelecionada; i++) {
         indice += tecladoAtual[i].length;
     }
-    // Ajuste para calcular o índice correto
-    indice += coluna;
+
+    indice += colunaSelecionada;
 
     const teclaSelecionada = teclas[indice];
     if (teclaSelecionada) {
         teclaSelecionada.classList.add('selecionada');
+        teclaSelecionada.focus(); // Dá foco visual à tecla selecionada
     }
 }
-
 
 // Função para mover a seleção no teclado
 function moverSelecao(direcao) {
@@ -100,7 +104,6 @@ function moverSelecao(direcao) {
     }
     selecionarTecla(linhaSelecionada, colunaSelecionada);
 }
-
 
 // Função para inserir o caractere da tecla pressionada
 function inserirCaractere() {
@@ -138,7 +141,6 @@ function inserirCaractere() {
     // Mantenha a seleção correta após inserir o caractere
     selecionarTecla(linhaSelecionada, colunaSelecionada);
 }
-
 
 // Eventos para controlar a navegação e a seleção
 document.addEventListener('keydown', (event) => {

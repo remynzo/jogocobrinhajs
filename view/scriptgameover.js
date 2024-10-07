@@ -16,7 +16,3 @@ var input = document.getElementById("myInput");
     buttonPlay.click();
   }
 });
-
-document.getElementById("nomeG") = document.getElementById("nomeC").innerText;
-document.getElementById("numeroG") = document.getElementById("numeroC").innerText;
-document.getElementById("scoreG") = document.getElementById("scoreC").innerText;
