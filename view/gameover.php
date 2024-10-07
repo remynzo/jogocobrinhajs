@@ -1,5 +1,8 @@
 <?php 
-include_once("../controller/playercontroller.php");
+    $score = $_POST["score"];
+    $nome = $_POST[$nome];
+    echo ($score);
+    echo ($nome);
 ?>
 <!DOCTYPE html>
 <html lang="pt-br">
@@ -13,10 +16,6 @@ include_once("../controller/playercontroller.php");
 </head>
 <body>
     <form action="?acao=cadastrar">  
-        <input type="hidden" name="score" id="scoreG">
-        <input type="hidden" name="num" id="numG" >
-        <input type="hidden" name="nome" id="nomeG">
-
     <div class="menu-screen">
         <span class="game-over">game over</span>
         <span class="final-score">score <span>00</span></span>
@@ -25,13 +24,12 @@ include_once("../controller/playercontroller.php");
             <span class="material-symbols-outlined">
                 play_circle
             </span>
-
             
             Jogar novamente
         </button>
 
     </div>
     </form> 
-    <script src="scriptgameover.js"></script>
+    <script defer src="scriptgameover.js"></script>
 </body>
 </html>

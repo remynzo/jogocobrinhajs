@@ -2,6 +2,7 @@ const teclado = document.getElementById('teclado');
 const texto = document.getElementById('texto');
 const info = document.querySelector(".info");
 const titulo = document.querySelector('#pergunta'); 
+const botao = document.querySelector('#chamaPHP'); 
 
 // Array com as letras do teclado alfabético
 const letras = [
@@ -134,6 +135,7 @@ function inserirCaractere() {
             document.getElementById('num').value = numero;
             info.style.display = "none"; // Esconde o teclado
             window.location.href = "jogo.html";
+            botao.click();
         }
     } else {
         texto.value += caractere; // Insere o caractere no campo de texto

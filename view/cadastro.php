@@ -1,6 +1,3 @@
-<?php 
-include_once("../controller/playercontroller.php");
-?>
 <!DOCTYPE html>
 <html lang="pt-br">
 <head>
@@ -12,19 +9,19 @@ include_once("../controller/playercontroller.php");
     <title>Document</title>
 </head>
 <body>
-    <form method="POST" action="?acao=cadastrar">    
- 
+    <form method="POST" action="jogo.php">    
     <div class="info">
         <h1 id="pergunta" >DIGITE SEU NOME:</h1>
         <input type="text" id="texto" name="texto">
-        <input type="hidden" name="score" id="score">
+
         <input type="hidden" name="num" id="num" >
         <input type="hidden" name="nome" id="nome">
-
+        <button id="chamaPHP" type="submit" style="display:none;"></button>
         <div id="teclado">
         </div>
     </div>  
     </form>
     <script src="scriptteclado.js"></script>
+
 </body>
 </html>

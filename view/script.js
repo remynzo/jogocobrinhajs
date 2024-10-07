@@ -5,6 +5,9 @@ const score = document.querySelector(".score--value");
 const finalScore = document.querySelector(".final-score > span");
 const menu = document.querySelector(".menu-screen");
 const buttonPlay = document.querySelector(".btn-play");
+const botao = document.querySelector('#chamaPHP'); 
+
+
 
 const audio = new Audio('../audio/audio.mp3');
 const size = 30;
@@ -137,14 +140,9 @@ const checkCollision = () => {
 };
 
 const gameOver = () => {
-    window.location.href = "gameover.php";
-    direction = undefined;
-    document.querySelector("#score").value = score.innerText; 
-    menu.style.display = "flex";
-    finalScore.innerText = score.innerText;
-    canvas.style.filter = "blur(20px) brightness(0.8)";
-    clearTimeout(loopId); // Para o loop do jogo
-    isGameOver = true;
+    let pontos = score.innerText; 
+    document.getElementById('score').value = pontos;
+    botao.click()
 };
 
 
