@@ -7,8 +7,6 @@ const menu = document.querySelector(".menu-screen");
 const buttonPlay = document.querySelector(".btn-play");
 const botao = document.querySelector('#chamaPHP'); 
 
-
-
 const audio = new Audio('../audio/audio.mp3');
 const size = 30;
 
@@ -31,7 +29,6 @@ const randomPosition = (axis) => {
     return Math.round(number / size) * size;
 };
 
-
 const randomColor = () => {
     const red = randomNumber(0, 255);
     const green = randomNumber(0, 255);
@@ -44,7 +41,6 @@ const food = {
     y: randomPosition('y'),
     color: randomColor()
 };
-
 
 const drawFood = () => {
     const { x, y, color } = food;
@@ -111,11 +107,11 @@ const checkEat = () => {
         snake.push(head); // Adiciona mais um bloco à cobra
         audio.play();
 
-        let x = randomPosition();
-        let y = randomPosition();
+        let x = randomPosition('x');
+        let y = randomPosition('y');
         while (snake.some(position => position.x === x && position.y === y)) {
-            x = randomPosition();
-            y = randomPosition();
+            x = randomPosition('x');
+            y = randomPosition('y');
         }
         food.x = x;
         food.y = y;
@@ -142,9 +138,11 @@ const checkCollision = () => {
 const gameOver = () => {
     let pontos = score.innerText; 
     document.getElementById('score').value = pontos;
-    botao.click()
+    direction = null;
+    isGameOver = true;
+    botao.click();
+    botao.disabled = true; // Desabilita o botão de envio
 };
-
 
 const gameLoop = () => {
     ctx.clearRect(0, 0, canvas.width, canvas.height);
@@ -179,4 +177,5 @@ const restart = () => {
     const info = document.querySelector(".info"); // Certifique-se de que o elemento existe
     if (info) info.style.display = "flex";
 };
- gameLoop()
+
+gameLoop();

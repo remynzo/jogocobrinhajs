@@ -1,7 +1,7 @@
-<?php
-    // Captura os dados enviados via POST da página anterior
+<?php 
+    include_once("../controller/playercontroller.php");
     $nome = $_POST["nome"] ?? ''; // Usa ?? para evitar erro caso não tenha valor
-    $num = $_POST["num"] ?? ''; // Evita erro se 'num' não for enviado
+    $num = $_POST["num"] ?? ''; 
 ?>
 <!DOCTYPE html>
 <html lang="pt-br">
@@ -14,20 +14,21 @@
     <title>Document</title>
 </head>
 <body>   
-    <form action="gameover.php" method="POST">
+
+    <form action="?acao=cadastrar" method="POST">
         <h1></h1>
         
         <div class="score">score: <span class="score--value" id="scoreDisplay">00</span></div>
         
         <button id="chamaPHP" type="submit" style="display:none;"></button>
 
-        <input type="hidden" name="score" id="score" value="0">
+        <input type="hidden" name="score" id="score" value="123">
         <input type="hidden" name="nome" id="nome" value="<?php echo htmlspecialchars($nome); ?>"> 
-        <input type="hidden" name="num" id="num" value="<?php echo htmlspecialchars($num); ?>"> 
+        <input type="hidden" name="num" id="num" value="<?php echo htmlspecialchars($num); ?>">
         
-<canvas width="600" height="600"></canvas>
-</form>
+        <canvas width="600" height="600"></canvas>
+    </form>
 
-<script src="script.js"></script>
+    <script src="script.js"></script>
 </body>
 </html>

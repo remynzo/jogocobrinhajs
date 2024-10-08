@@ -1,8 +1,19 @@
 <?php
-    // Captura os dados enviados via POST ou define como vazio se não estiverem disponíveis
-    $score = $_POST["score"] ?? ''; 
-    $nome = $_POST["nome"] ?? ''; 
-    $num = $_POST["num"] ?? ''; 
+include_once("../controller/playercontroller.php");
+require_once('../model/conexao.php');
+
+// Conectando ao banco usando PDO
+$conexao = new Conexao();
+$con = $conexao->Conectar();
+
+// Query para selecionar os dados dos jogadores, ordenando por score e limitando a 12 resultados
+$query = "SELECT * FROM player ORDER BY score DESC LIMIT 12"; // Modificado
+$stmt = $con->prepare($query);
+$stmt->execute();
+$result = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+// Dados recebidos via POST
+$score = $_POST["score"] ?? ''; 
 ?>
 <!DOCTYPE html>
 <html lang="pt-br">
@@ -16,19 +27,43 @@
 </head>
 
 <body>
-    <form action="?acao=cadastrar" method="POST">  <!-- Alterar o método para POST -->
-    <div class="menu-screen">
-        <span class="game-over">game over</span>
-        <span class="final-score">score <span><?php echo htmlspecialchars($score); ?></span></span>
-        <input type="hidden" name="num" id="num" value="<?php echo htmlspecialchars($num); ?>"> 
-        <input type="hidden" name="nome" id="nome" value="<?php echo htmlspecialchars($nome); ?>"> 
-        <input type="hidden" name="score" id="score" value="<?php echo htmlspecialchars($score); ?>"> 
-        <button type="submit" class="btn-play">
-            <span class="material-symbols-outlined">play_circle</span>
-            Jogar novamente
-        </button>
-    </div>
+
+        <div class="container">
+            <div class="menu-screen">
+                <span class="game-over">game over</span>
+                <span class="final-score">score <span><?php echo htmlspecialchars($score); ?></span></span>
+                <button type="submit" class="btn-play">
+                    <span class="material-symbols-outlined">play_circle</span>
+                    Jogar novamente
+                </button>
+            </div>
+
+            
+        </div>
+        <div class="tabela"> 
+                <table>
+                    <tr>
+                        <td class="titulo">NOME</td>
+                        <td class="titulo">SCORE</td>
+                    </tr>
+
+                    <?php
+                    // Exibindo os dados do banco de dados
+                    if ($result) {
+                        foreach ($result as $row) {
+                            echo "<tr>";
+                            echo "<td>" . htmlspecialchars($row['nome']) . "</td>";
+                            echo "<td>" . htmlspecialchars($row['score']) . "</td>";
+                            echo "</tr>";
+                        }
+                    } else {
+                        echo "<tr><td colspan='2'>Nenhum dado encontrado</td></tr>";
+                    }
+                    ?>
+                </table>
+            </div>
     </form> 
+
     <script defer src="scriptgameover.js"></script>
 </body>
 </html>

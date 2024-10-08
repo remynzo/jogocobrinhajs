@@ -1,14 +1,15 @@
 const buttonPlay = document.querySelector(".btn-play");
 
-  const redireciona = () =>{
-    window.location.href = "cadastro.html";
-  }
+// Detectar a tecla Enter e disparar o clique no botão de jogar novamente
+document.addEventListener("keydown", (event) => {
+    if (event.key === "Enter") {
+        buttonPlay.click();
+    }
+});
 
-var input = document.getElementById("myInput");
+// Adicionar o evento de clique ao botão
+buttonPlay.addEventListener("click", (event) => {
+    event.preventDefault();  // Previne que o redirecionamento aconteça imediatamente
 
-  document.addEventListener("keydown", (event)=> {
-  if (event.key === "Enter") {
-    event.preventDefault();
-    buttonPlay.click();
-  }
+    window.location.href = "cadastro.php";
 });

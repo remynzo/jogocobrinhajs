@@ -43,14 +43,31 @@ class Player implements JsonSerializable {
         $this->con = $classe_con->conectar();
     }
 
+    // Verificar se o jogador já existe
+    private function jogadorExiste($nome) {
+        $comandoSql = "SELECT COUNT(*) FROM player WHERE nome = ?";
+        $exec = $this->con->prepare($comandoSql);
+        $exec->execute([$nome]);
+        return $exec->fetchColumn() > 0; // Retorna true se existir
+    }
+
     // Cadastrar jogador
     function cadastrar() {
+        // Verifica se o jogador já existe
+        if ($this->jogadorExiste($this->nome)) {
+            echo "Jogador já cadastrado.";
+            return false; // Retorna falso se o jogador já estiver cadastrado
+        }
+
         $comandoSql = "INSERT INTO player (nome, score, numero) VALUES (?, ?, ?)";
         $valores = array($this->nome, $this->score, $this->numero);
         $exec = $this->con->prepare($comandoSql);
         
         try {
-            return $exec->execute($valores);
+            $resultado = $exec->execute($valores);
+            header("location: gameover.php");
+            return $resultado;
+
         } catch (PDOException $e) {
             echo "Erro ao cadastrar: " . $e->getMessage();
             return false; // Retorna falso se ocorrer erro

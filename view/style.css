@@ -48,6 +48,7 @@ body{
     height: 210px;
     padding: 50px;
     overflow: hidden;
+    left: 100px;
 }
 .game-over{
     top: 35%;
@@ -101,4 +102,37 @@ form{
     flex-direction: column;
     overflow: hidden;
 
+}
+.container{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    height: 100%;
+    width: 100%;
+}
+.tabela{
+    width: 40%;
+    height: 100%;
+    background-color: #202020;
+    left: 1000px;
+    position: absolute;
+    top: 50px;
+}
+table{
+    color: black;
+    width: 100%;
+}
+tr{
+    width: 100%;
+}
+td{
+    border: solid #363636;
+    height: 40px;
+    font-size: 3rem;
+    width: 50%;
+}
+.titulo{
+    background-color: #363636;
+    color: yellow;
 }
