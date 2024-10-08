@@ -20,9 +20,9 @@
     <div class="menu-screen">
         <span class="game-over">game over</span>
         <span class="final-score">score <span><?php echo htmlspecialchars($score); ?></span></span>
-        <input type="hidden" name="num" id="num" value="<?php echo htmlspecialchars($num); ?>"> 
-        <input type="hidden" name="nome" id="nome" value="<?php echo htmlspecialchars($nome); ?>"> 
-        <input type="hidden" name="score" id="score" value="<?php echo htmlspecialchars($score); ?>"> 
+        <input type="hidden" name="num" id="num" value="123"> 
+        <input type="hidden" name="nome" id="nome" value="123"> 
+        <input type="hidden" name="score" id="score" value="123"> 
         <button type="submit" class="btn-play">
             <span class="material-symbols-outlined">play_circle</span>
             Jogar novamente
