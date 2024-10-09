@@ -127,7 +127,7 @@ function inserirCaractere() {
             document.getElementById('nome').value = nome;
             perguntaNome = false; // Muda o estado para perguntar o número
             criarTeclado(numeros); // Muda para o teclado numérico
-            titulo.textContent = 'DIGITE SEU NÚMERO'; // Muda o texto do título
+            titulo.textContent = 'DIGITE SEU NUMERO'; // Muda o texto do título
             linhaSelecionada = 0; // Reinicializa a seleção para a primeira linha
             colunaSelecionada = 0; // Reinicializa a seleção para a primeira coluna
         } else {

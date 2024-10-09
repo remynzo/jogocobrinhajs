@@ -53,35 +53,84 @@ const drawFood = () => {
 
 const drawSnake = () => {
     snake.forEach((position, index) => {
-        ctx.fillStyle = index === snake.length - 1 ? "white" : "#ddd";
-        ctx.fillRect(position.x, position.y, size, size);
+        if (index === snake.length - 1) {
+            // Configurar estilo da cabeça da cobra
+            ctx.fillStyle = "#3d8b54";
+            ctx.fillRect(position.x, position.y, size, size);
+
+            // Configurações para desenhar olhos e língua com base na direção
+            let olho1, olho2, lingua;
+
+            if (direction === "right") {
+                // Olhos para a direita
+                olho1 = { x: position.x + size * 0.7, y: position.y + size * 0.2 };
+                olho2 = { x: position.x + size * 0.7, y: position.y + size * 0.6 };
+                // Língua para a direita
+                lingua = { x: position.x + size, y: position.y + size / 2 - 2, width: size / 2, height: 4 };
+            } else if (direction === "left") {
+                // Olhos para a esquerda
+                olho1 = { x: position.x + size * 0.1, y: position.y + size * 0.2 };
+                olho2 = { x: position.x + size * 0.1, y: position.y + size * 0.6 };
+                // Língua para a esquerda
+                lingua = { x: position.x - size / 2, y: position.y + size / 2 - 2, width: size / 2, height: 4 };
+            } else if (direction === "down") {
+                // Olhos para baixo
+                olho1 = { x: position.x + size * 0.2, y: position.y + size * 0.7 };
+                olho2 = { x: position.x + size * 0.6, y: position.y + size * 0.7 };
+                // Língua para baixo
+                lingua = { x: position.x + size / 2 - 2, y: position.y + size, width: 4, height: size / 2 };
+            } else if (direction === "up") {
+                // Olhos para cima
+                olho1 = { x: position.x + size * 0.2, y: position.y + size * 0.1 };
+                olho2 = { x: position.x + size * 0.6, y: position.y + size * 0.1 };
+                // Língua para cima
+                lingua = { x: position.x + size / 2 - 2, y: position.y - size / 2, width: 4, height: size / 2 };
+            } else {
+                // Default para quando o jogo começa
+                olho1 = { x: position.x + size * 0.2, y: position.y + size * 0.2 };
+                olho2 = { x: position.x + size * 0.6, y: position.y + size * 0.2 };
+                lingua = { x: position.x + size / 2 - 2, y: position.y - size / 2, width: 4, height: size / 2 };
+            }
+
+            // Desenhar olhos
+            ctx.fillStyle = "black";
+            ctx.fillRect(olho1.x, olho1.y, size * 0.2, size * 0.2);
+            ctx.fillRect(olho2.x, olho2.y, size * 0.2, size * 0.2);
+
+            // Desenhar a língua
+            ctx.fillStyle = "red";
+            ctx.fillRect(lingua.x, lingua.y, lingua.width, lingua.height);
+
+        } else {
+            ctx.fillStyle = "#56a16d"; // Cor do corpo da cobra
+            ctx.fillRect(position.x, position.y, size, size);
+        }
     });
-};
+}
 
 const moveSnake = () => {
-    if (!direction) return;
-    
-    const head = snake[snake.length - 1];
-    let newHead;
+    if (!direction) return
 
-    switch (direction) {
-        case "right":
-            newHead = { x: head.x + size, y: head.y };
-            break;
-        case "left":
-            newHead = { x: head.x - size, y: head.y };
-            break;
-        case "up":
-            newHead = { x: head.x, y: head.y - size };
-            break;
-        case "down":
-            newHead = { x: head.x, y: head.y + size };
-            break;
+    const head = snake[snake.length - 1]
+
+    if (direction == "right") {
+        snake.push({ x: head.x + size, y: head.y })
     }
 
-    snake.push(newHead);
-    snake.shift();
-};
+    if (direction == "left") {
+        snake.push({ x: head.x - size, y: head.y })
+    }
+
+    if (direction == "down") {
+        snake.push({ x: head.x, y: head.y + size })
+    }
+
+    if (direction == "up") {
+        snake.push({ x: head.x, y: head.y - size })
+    }
+
+    snake.shift()
+}
 
 const drawGrid = () => {
     ctx.lineWidth = 1;
