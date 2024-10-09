@@ -54,10 +54,10 @@ class Player implements JsonSerializable {
     // Cadastrar jogador
     function cadastrar() {
         // Verifica se o jogador já existe
-        if ($this->jogadorExiste($this->nome)) {
-            echo "Jogador já cadastrado.";
-            return false; // Retorna falso se o jogador já estiver cadastrado
-        }
+        //if ($this->jogadorExiste($this->nome)) {
+        //    echo "Jogador já cadastrado.";
+        //    return false; // Retorna falso se o jogador já estiver cadastrado
+        //}
 
         $comandoSql = "INSERT INTO player (nome, score, numero) VALUES (?, ?, ?)";
         $valores = array($this->nome, $this->score, $this->numero);

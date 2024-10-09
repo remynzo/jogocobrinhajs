@@ -31,7 +31,6 @@ $score = $_POST["score"] ?? '';
         <div class="container">
             <div class="menu-screen">
                 <span class="game-over">game over</span>
-                <span class="final-score">score <span><?php echo htmlspecialchars($score); ?></span></span>
                 <button type="submit" class="btn-play">
                     <span class="material-symbols-outlined">play_circle</span>
                     Jogar novamente
@@ -43,18 +42,22 @@ $score = $_POST["score"] ?? '';
         <div class="tabela"> 
                 <table>
                     <tr>
-                        <td class="titulo">NOME</td>
+                    <td class="titulo">RANKING</td>    
+                    <td class="titulo">NOME</td>
                         <td class="titulo">SCORE</td>
                     </tr>
 
                     <?php
                     // Exibindo os dados do banco de dados
+                    $x=1;
                     if ($result) {
                         foreach ($result as $row) {
                             echo "<tr>";
+                            echo "<td>" . htmlspecialchars($x) ."º". "</td>";
                             echo "<td>" . htmlspecialchars($row['nome']) . "</td>";
                             echo "<td>" . htmlspecialchars($row['score']) . "</td>";
                             echo "</tr>";
+                            $x=$x+1;
                         }
                     } else {
                         echo "<tr><td colspan='2'>Nenhum dado encontrado</td></tr>";

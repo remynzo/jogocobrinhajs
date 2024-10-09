@@ -1,3 +1,8 @@
+.tecla-enviar {
+    font-size: 0px;
+    background-image: url(../imagens/enter.png);
+    flex: 1;
+}
 .linha-teclado {
     display: flex;
     justify-content: center;
@@ -6,6 +11,8 @@
 
 .tecla {
     padding: 10px;
+    padding-bottom: 20px;
+    padding-left: 27px;
     margin: 20px;
     border: 1px solid #090909;
     cursor: pointer;
@@ -28,6 +35,7 @@
     height: 140px;
     width: 140px;
     margin: 0px;
+    font-size: 7rem;
 }
 .container{
     display: flex;
@@ -35,9 +43,6 @@
     align-items: center;
     flex-direction: column;
     height: 800px;
-}
-body{
-    font-family: "Open Sans", sans-serif;
 }
 input{
     bottom: 20px;
@@ -49,9 +54,10 @@ input{
     color: yellow;
     border: #0e0e0e;
     border-style: solid;
-
+    padding: 10px;
+    padding-bottom: 20px;
 }
-.tecla-enviar {
-    flex: 1; /* Faz a tecla "Enviar" ocupar toda a largura disponível */
-    margin: 2px 0; /* Ajusta a margem para a tecla "Enviar" */
+
+#pergunta{
+    font-size: 6rem;
 }
